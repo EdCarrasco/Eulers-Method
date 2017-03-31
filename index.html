@@ -1,0 +1,174 @@
+<!DOCTYPE html5>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Euler's Method</title>
+	<meta author="Edward Carrasco">
+
+	<script type="text/javascript" src="p5.min.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+
+	<style type="text/css">
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 16px;
+		}
+		form {
+			margin-top: 10px
+		}
+		button.active, 
+		button.autoactive,
+		button.multiActive {
+			background-color: orange;
+		}
+	</style>
+	
+</head>
+
+<body>
+	<div id="sketch-container"></div>
+	<div>
+		<form>
+			<!-- Functions -->
+			<label>Functions</label>
+			<button type="button" id="button-func1" onclick="func=func1; buttonActive(this, 'active'); turnOffMultiLine();">y'=1/y</button>
+			<button type="button" onclick="func=func2; buttonActive(this, 'active'); turnOffMultiLine();">y'=1/x</button>
+			<button type="button" onclick="func=func3; buttonActive(this, 'active'); turnOffMultiLine();">y'=y-x</button>
+			<button type="button" onclick="func=func4; buttonActive(this, 'active'); turnOffMultiLine();">y'=-x/y</button>
+			<button type="button" onclick="func=func5; buttonActive(this, 'active'); turnOffMultiLine();">y'=y^(1/3)</button>
+			<button type="button" onclick="func=func6; buttonActive(this, 'active'); turnOffMultiLine();">y'=y^2-1</button>
+			<button type="button" onclick="func=func7; buttonActive(this, 'active'); turnOffMultiLine();">y'=(x+y)/(x-y)</button>
+			<button type="button" onclick="func=func8; buttonActive(this, 'active'); turnOffMultiLine();">y'=(sin x)(sin y)</button>
+			<button type="button" onclick="func=func9; buttonActive(this, 'active'); turnOffMultiLine();">y'=x^2-y^2</button>
+			<br/>
+			<br/>
+			
+			<!-- Settings -->
+			<button type="button" id="button-eraser" onclick="toggleGraphing()">Draw Multiple Lines</button>
+			<button type="button" onclick="centerGraph()">Center the graph</button>
+			<button type="button" id="button-resetall" onclick="resetAll();">&#8635; Reset All</button>
+			<br/>
+			<br/>
+
+			<!-- Initial X -->
+			<label for="number-initial-x">Initial X</label>
+			<input type="number" name="number-initial-x" id="number-initial-x" 
+					value="0" min="-10" max="10" step="0.001" 
+					oninput="document.getElementById('slider-initial-x').value = this.value">
+			<button type="button" id="button-initial-x" name="button-initial-x" 
+					onclick="
+						document.getElementById('slider-initial-x').value = document.getElementById('slider-initial-x').defaultValue; 
+						document.getElementById('number-initial-x').value = document.getElementById('number-initial-x').defaultValue;"
+					>&#8635;</button>
+			<input type="range" name="slider-initial-x" id="slider-initial-x" 
+					value="0" min="-10" max="10" step="0.001" 
+					oninput="document.getElementById('number-initial-x').value = this.value">
+			<button type="button" id="button-autodrawx" 
+					onclick="toggleAutodrawX()">Auto</button>
+			<br/>
+			
+
+			<!-- Initial Y -->
+			<label for="number-initial-y">Initial Y</label>
+			<input type="number" name="number-initial-y" id="number-initial-y" 
+					value="0" min="-10" max="10" step="0.001" 
+					oninput="document.getElementById('slider-initial-y').value = this.value">
+			<button type="button" id="button-initial-y" name="button-initial-y" 
+					onclick="
+						document.getElementById('slider-initial-y').value = document.getElementById('slider-initial-y').defaultValue; 
+						document.getElementById('number-initial-y').value = document.getElementById('number-initial-y').defaultValue;"
+					>&#8635;</button>
+			<input type="range" name="slider-initial-y" id="slider-initial-y" 
+					value="0" min="-10" max="10" step="0.001" 
+					oninput="document.getElementById('number-initial-y').value = this.value">
+			<button type="button" id="button-autodrawy" 
+					onclick="toggleAutodrawY()">Auto</button>
+			<br/>
+			<br/>
+
+			<!-- Delta X -->
+			<label for="number-dx">Delta X</label>
+			<input type="number" name="number-dx" id="number-dx" 
+					value="0.025" min="0.0001" max="1" step="0.0001" 
+					oninput="document.getElementById('slider-dx').value = this.value">
+			<button type="button" id="button-dx" name="button-dx" 
+					onclick="
+						document.getElementById('slider-dx').value = document.getElementById('slider-dx').defaultValue; 
+						document.getElementById('number-dx').value = document.getElementById('number-dx').defaultValue;
+						turnOffMultiLine();"
+					>&#8635;</button>
+			<input type="range" name="slider-dx" id="slider-dx" 
+					value="0.025" min="0.0001" max="1" step="0.0001" 
+					oninput="document.getElementById('number-dx').value = this.value;
+							turnOffMultiLine();">
+			<br/>
+
+			<!-- Subintervals -->
+			<label for="number-subintervals">Subintervals</label>
+			<input type="number" name="number-subintervals" id="number-subintervals" 
+					value="1000" min="1" max="5000" step="1" 
+					oninput="document.getElementById('slider-subintervals').value = this.value">
+			<button type="button" id="button-subintervals" name="button-subintervals" 
+					onclick="
+						document.getElementById('slider-subintervals').value = document.getElementById('slider-subintervals').defaultValue; 
+						document.getElementById('number-subintervals').value = document.getElementById('number-subintervals').defaultValue;
+						turnOffMultiLine();"
+					>&#8635;</button>
+			<input type="range" name="slider-subintervals" id="slider-subintervals" 
+					value="1000" min="1" max="5000" step="1" 
+					oninput="document.getElementById('number-subintervals').value = this.value;
+							turnOffMultiLine();">
+			<br/>
+			<br/>
+
+			<!-- X Scale -->
+			<label for="slider-xscale">X scale</label>
+			<input type="number" name="number-xscale" id="number-xscale" 
+					value="20" min="20" max="500" step="1" 
+					oninput="document.getElementById('slider-xscale').value = this.value">
+			<button type="button" id="button-xscale" name="button-xscale" 
+					onclick="
+						document.getElementById('slider-xscale').value = document.getElementById('slider-xscale').defaultValue; 
+						document.getElementById('number-xscale').value = document.getElementById('number-xscale').defaultValue;
+						turnOffMultiLine();"
+					>&#8635;</button>
+			<input type="range" name="slider-xscale" id="slider-xscale" 
+					value="20" min="20" max="500" step="1" 
+					oninput="document.getElementById('number-xscale').value = this.value;
+							turnOffMultiLine();">
+			<br/>
+
+			<!-- Y Scale -->
+			<label for="slider-yscale">Y scale</label>
+			<input type="number" name="number-yscale" id="number-yscale" 
+					value="20" min="20" max="500" step="1" 
+					oninput="document.getElementById('slider-yscale').value = this.value">
+			<button type="button" id="button-yscale" name="button-yscale" 
+					onclick="
+						document.getElementById('slider-yscale').value = document.getElementById('slider-yscale').defaultValue; 
+						document.getElementById('number-yscale').value = document.getElementById('number-yscale').defaultValue;
+						turnOffMultiLine();"
+					>&#8635;</button>
+			<input type="range" name="slider-yscale" id="slider-yscale" 
+					value="20" min="20" max="500" step="1" 
+					oninput="document.getElementById('number-yscale').value = this.value;
+							turnOffMultiLine();">
+			<br/>
+
+			<!-- Point size -->
+			<label>Point size</label>
+			<input type="number" name="number-point-size" id="number-point-size" 
+					value="2" min="1" max="10" step="1" 
+					oninput="document.getElementById('slider-point-size').value = this.value">
+			<button type="button" id="button-point-size" name="button-point-size" 
+					onclick="
+						document.getElementById('slider-point-size').value = document.getElementById('slider-point-size').defaultValue; 
+						document.getElementById('number-point-size').value = document.getElementById('number-point-size').defaultValue;"
+					>&#8635;</button>
+			<input type="range" name="slider-point-size" id="slider-point-size" 
+					value="1" min="1" max="10" step="1" 
+					oninput="document.getElementById('number-point-size').value = this.value">
+		</form>
+	</div>
+</body>
+</html>
