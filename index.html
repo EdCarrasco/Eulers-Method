@@ -71,7 +71,7 @@
 			<!-- Initial Y -->
 			<label for="number-initial-y">Initial Y</label>
 			<input type="number" name="number-initial-y" id="number-initial-y" 
-					value="0" min="-10" max="10" step="0.001" 
+					value="1" min="-10" max="10" step="0.001" 
 					oninput="document.getElementById('slider-initial-y').value = this.value">
 			<button type="button" id="button-initial-y" name="button-initial-y" 
 					onclick="
@@ -79,7 +79,7 @@
 						document.getElementById('number-initial-y').value = document.getElementById('number-initial-y').defaultValue;"
 					>&#8635;</button>
 			<input type="range" name="slider-initial-y" id="slider-initial-y" 
-					value="0" min="-10" max="10" step="0.001" 
+					value="1" min="-10" max="10" step="0.001" 
 					oninput="document.getElementById('number-initial-y').value = this.value">
 			<button type="button" id="button-autodrawy" 
 					onclick="toggleAutodrawY()">Auto</button>
