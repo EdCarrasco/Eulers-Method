@@ -20,7 +20,7 @@ var xscale = 100;
 var yscale = 100;
 var radius = 1;
 
-var func = func1;
+var func = func8;
 
 var isGraphing = false;
 var autodraw = false;
