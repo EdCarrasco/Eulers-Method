@@ -34,15 +34,6 @@
 	<div>
 		<form>
 			<!-- Functions -->
-			<!--
-			<select>
-				<option value="A">$$y'=\frac{1}{y}$$</option>
-				<option value="B">$$y'=-\frac{x}{y}$$</option>
-				<option value="C">$$y'=\sin x\sin y$$</option>
-				<option value="D">$$y'=\frac{x-y}{x+y}$$</option>
-			</select>
-			<br/>
--->
 			<button type="button" id="button-func1" onclick="func=func1; buttonActive(this, 'active'); turnOffMultiLine();">$$y'=\frac{1}{y}$$</button><!-- y'=1/y -->
 			<button type="button" id="button-func2" onclick="func=func2; buttonActive(this, 'active'); turnOffMultiLine();">$$y'=\frac{1}{x}$$</button><!-- y'=1/x -->
 			<button type="button" id="button-func4" onclick="func=func4; buttonActive(this, 'active'); turnOffMultiLine();">$$y'=-\frac{x}{y}$$</button><!-- y'=-x/y -->
@@ -103,7 +94,7 @@
 			<!-- Delta X -->
 			<label for="number-dx">Delta X</label>
 			<input type="number" name="number-dx" id="number-dx" 
-					value="0.025" min="0.0001" max="1" step="0.0001" 
+					value="0.1" min="0.0001" max="1" step="0.0001" 
 					oninput="document.getElementById('slider-dx').value = this.value">
 			<button type="button" id="button-dx" name="button-dx" 
 					onclick="
@@ -112,7 +103,7 @@
 						turnOffMultiLine();"
 					>&#8635;</button>
 			<input type="range" name="slider-dx" id="slider-dx" 
-					value="0.025" min="0.0001" max="1" step="0.0001" 
+					value="0.1" min="0.0001" max="1" step="0.0001" 
 					oninput="document.getElementById('number-dx').value = this.value;
 							turnOffMultiLine();">
 			<br/>
@@ -138,7 +129,7 @@
 			<!-- X Scale -->
 			<label for="slider-xscale">X scale</label>
 			<input type="number" name="number-xscale" id="number-xscale" 
-					value="20" min="20" max="500" step="1" 
+					value="50" min="20" max="500" step="1" 
 					oninput="document.getElementById('slider-xscale').value = this.value">
 			<button type="button" id="button-xscale" name="button-xscale" 
 					onclick="
@@ -147,7 +138,7 @@
 						turnOffMultiLine();"
 					>&#8635;</button>
 			<input type="range" name="slider-xscale" id="slider-xscale" 
-					value="20" min="20" max="500" step="1" 
+					value="50" min="20" max="500" step="1" 
 					oninput="document.getElementById('number-xscale').value = this.value;
 							turnOffMultiLine();">
 			<br/>
@@ -155,7 +146,7 @@
 			<!-- Y Scale -->
 			<label for="slider-yscale">Y scale</label>
 			<input type="number" name="number-yscale" id="number-yscale" 
-					value="20" min="20" max="500" step="1" 
+					value="50" min="20" max="500" step="1" 
 					oninput="document.getElementById('slider-yscale').value = this.value">
 			<button type="button" id="button-yscale" name="button-yscale" 
 					onclick="
@@ -164,7 +155,7 @@
 						turnOffMultiLine();"
 					>&#8635;</button>
 			<input type="range" name="slider-yscale" id="slider-yscale" 
-					value="20" min="20" max="500" step="1" 
+					value="50" min="20" max="500" step="1" 
 					oninput="document.getElementById('number-yscale').value = this.value;
 							turnOffMultiLine();">
 			<br/>
@@ -172,7 +163,7 @@
 			<!-- Point size -->
 			<label>Point size</label>
 			<input type="number" name="number-point-size" id="number-point-size" 
-					value="2" min="1" max="10" step="1" 
+					value="3" min="1" max="10" step="1" 
 					oninput="document.getElementById('slider-point-size').value = this.value">
 			<button type="button" id="button-point-size" name="button-point-size" 
 					onclick="
@@ -180,7 +171,7 @@
 						document.getElementById('number-point-size').value = document.getElementById('number-point-size').defaultValue;"
 					>&#8635;</button>
 			<input type="range" name="slider-point-size" id="slider-point-size" 
-					value="1" min="1" max="10" step="1" 
+					value="3" min="1" max="10" step="1" 
 					oninput="document.getElementById('number-point-size').value = this.value">
 		</form>
 	</div>
