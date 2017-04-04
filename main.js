@@ -291,3 +291,7 @@ function func8(x,y) {
 function func9(x,y) {
 	return pow(x,2) - pow(y,2);
 }
+
+function func10(x,y) {
+	return (x-y)/(x+y);
+}
